@@ -83,7 +83,18 @@ struct HomeView: View {
                 }
                 .padding(.horizontal)
                 
-                // 5. Profile & Settings
+                // 5. Blood Compatibility & Information
+                NavigationLink(destination: BloodCompatibilityView()) {
+                    HomeCard(
+                        title: "Blood Compatibility",
+                        subtitle: "Educational chart for red blood cell donor & recipient compatibility",
+                        icon: "cross.case.fill",
+                        iconColor: .pink
+                    )
+                }
+                .padding(.horizontal)
+                
+                // 6. Profile & Settings
                 NavigationLink(destination: SettingsView()) {
                     HomeCard(
                         title: "Settings",

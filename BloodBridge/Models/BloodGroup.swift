@@ -2,12 +2,12 @@
 //  BloodGroup.swift
 //  BloodBridge
 //
-//  Created for Phase 2: UI Foundation & Navigation.
+//  Blood group definitions and compatibility data models.
 //
 
 import Foundation
 
-enum BloodGroup: String, CaseIterable, Identifiable {
+enum BloodGroup: String, CaseIterable, Identifiable, Codable {
     case aPositive = "A+"
     case aNegative = "A-"
     case bPositive = "B+"
@@ -28,3 +28,11 @@ enum BloodGroup: String, CaseIterable, Identifiable {
     }
 }
 
+// Data model representing educational blood group compatibility information
+struct BloodGroupInfo: Identifiable, Codable {
+    var id: String { bloodGroup }
+    let bloodGroup: String
+    let canDonateTo: [String]
+    let canReceiveFrom: [String]
+    let description: String
+}

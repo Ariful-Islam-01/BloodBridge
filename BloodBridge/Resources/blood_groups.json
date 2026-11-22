@@ -1,0 +1,51 @@
+[
+  {
+    "bloodGroup": "O-",
+    "canDonateTo": ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+    "canReceiveFrom": ["O-"],
+    "description": "O-negative individuals are universal red blood cell donors. Their red cells lack A, B, and Rh antigens, making them vital in trauma and emergency transfusions."
+  },
+  {
+    "bloodGroup": "O+",
+    "canDonateTo": ["O+", "A+", "B+", "AB+"],
+    "canReceiveFrom": ["O+", "O-"],
+    "description": "O-positive is one of the most common blood types worldwide. Their red blood cells can be transfused to any Rh-positive patient."
+  },
+  {
+    "bloodGroup": "A-",
+    "canDonateTo": ["A+", "A-", "AB+", "AB-"],
+    "canReceiveFrom": ["A-", "O-"],
+    "description": "A-negative individuals have A antigens without the Rh factor. They can safely donate red blood cells to both A and AB recipients."
+  },
+  {
+    "bloodGroup": "A+",
+    "canDonateTo": ["A+", "AB+"],
+    "canReceiveFrom": ["A+", "A-", "O+", "O-"],
+    "description": "A-positive is a common blood type containing A and Rh antigens. They can receive red blood cells from A and O donors."
+  },
+  {
+    "bloodGroup": "B-",
+    "canDonateTo": ["B+", "B-", "AB+", "AB-"],
+    "canReceiveFrom": ["B-", "O-"],
+    "description": "B-negative is a rarer blood type containing B antigens without the Rh factor. They can donate red blood cells to B and AB patients."
+  },
+  {
+    "bloodGroup": "B+",
+    "canDonateTo": ["B+", "AB+"],
+    "canReceiveFrom": ["B+", "B-", "O+", "O-"],
+    "description": "B-positive contains B antigens and the Rh factor. They can receive red blood cells from B and O types and donate to B+ and AB+ recipients."
+  },
+  {
+    "bloodGroup": "AB-",
+    "canDonateTo": ["AB+", "AB-"],
+    "canReceiveFrom": ["AB-", "A-", "B-", "O-"],
+    "description": "AB-negative is the rarest blood group. Because their red cells have both A and B antigens, they can donate red blood cells only to other AB patients."
+  },
+  {
+    "bloodGroup": "AB+",
+    "canDonateTo": ["AB+"],
+    "canReceiveFrom": ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"],
+    "description": "AB-positive individuals are universal red blood cell recipients because their blood recognizes A, B, and Rh antigens without producing antibodies against them."
+  }
+]
+
