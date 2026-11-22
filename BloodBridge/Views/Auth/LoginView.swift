@@ -2,7 +2,7 @@
 //  LoginView.swift
 //  BloodBridge
 //
-//  Login screen using simple SwiftUI components.
+//  Login screen using simple SwiftUI components with loading state.
 //
 
 import SwiftUI
@@ -24,22 +24,29 @@ struct LoginView: View {
                         icon: "envelope.fill",
                         text: $authViewModel.loginEmail
                     )
+                    .disabled(authViewModel.isLoading)
                     
                     CustomSecureField(
                         title: "Password",
                         icon: "lock.fill",
                         text: $authViewModel.loginPassword
                     )
+                    .disabled(authViewModel.isLoading)
                     
                     // Error message display
                     if !authViewModel.errorMessage.isEmpty {
                         Text(authViewModel.errorMessage)
                             .font(.footnote)
                             .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
                     }
                     
-                    // Login Button (UI only for Phase 2)
-                    PrimaryButton(title: "Log In", icon: "arrow.right") {
+                    // Login Button with Loading Spinner
+                    PrimaryButton(
+                        title: "Log In",
+                        icon: "arrow.right",
+                        isLoading: authViewModel.isLoading
+                    ) {
                         authViewModel.login()
                     }
                 }
@@ -58,6 +65,7 @@ struct LoginView: View {
                             .fontWeight(.bold)
                             .foregroundColor(AppTheme.primaryRed)
                     }
+                    .disabled(authViewModel.isLoading)
                 }
                 .padding(.top, 10)
             }

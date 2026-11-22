@@ -15,7 +15,7 @@ struct HomeView: View {
             VStack(spacing: 16) {
                 // Welcome Banner
                 VStack(alignment: .leading, spacing: 6) {
-                    Text("Welcome to BloodBridge 👋")
+                    Text(authViewModel.userDisplayName.isEmpty ? "Welcome to BloodBridge 👋" : "Welcome, \(authViewModel.userDisplayName) 👋")
                         .font(.title2)
                         .fontWeight(.bold)
                     

@@ -23,9 +23,9 @@ struct SettingsView: View {
                         .foregroundColor(AppTheme.primaryRed)
                     
                     VStack(alignment: .leading, spacing: 2) {
-                        Text("Md Sabbir Hossain")
+                        Text(authViewModel.userDisplayName.isEmpty ? "Blood Donor" : authViewModel.userDisplayName)
                             .font(.headline)
-                        Text("Blood Group: O+ (Donor)")
+                        Text(authViewModel.userEmail.isEmpty ? "Active Account" : authViewModel.userEmail)
                             .font(.subheadline)
                             .foregroundColor(.gray)
                     }

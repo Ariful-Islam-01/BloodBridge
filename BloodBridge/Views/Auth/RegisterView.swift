@@ -2,7 +2,7 @@
 //  RegisterView.swift
 //  BloodBridge
 //
-//  Registration screen using simple SwiftUI components.
+//  Registration screen using simple SwiftUI components with loading state.
 //
 
 import SwiftUI
@@ -29,34 +29,43 @@ struct RegisterView: View {
                         icon: "person.fill",
                         text: $authViewModel.registerFullName
                     )
+                    .disabled(authViewModel.isLoading)
                     
                     CustomTextField(
                         title: "Email Address",
                         icon: "envelope.fill",
                         text: $authViewModel.registerEmail
                     )
+                    .disabled(authViewModel.isLoading)
                     
                     CustomSecureField(
-                        title: "Password",
+                        title: "Password (min 6 characters)",
                         icon: "lock.fill",
                         text: $authViewModel.registerPassword
                     )
+                    .disabled(authViewModel.isLoading)
                     
                     CustomSecureField(
                         title: "Confirm Password",
                         icon: "lock.shield.fill",
                         text: $authViewModel.registerConfirmPassword
                     )
+                    .disabled(authViewModel.isLoading)
                     
                     // Error message display
                     if !authViewModel.errorMessage.isEmpty {
                         Text(authViewModel.errorMessage)
                             .font(.footnote)
                             .foregroundColor(.red)
+                            .multilineTextAlignment(.center)
                     }
                     
-                    // Register Button (UI only for Phase 2)
-                    PrimaryButton(title: "Register", icon: "person.badge.plus") {
+                    // Register Button with Loading Spinner
+                    PrimaryButton(
+                        title: "Register",
+                        icon: "person.badge.plus",
+                        isLoading: authViewModel.isLoading
+                    ) {
                         authViewModel.register()
                     }
                 }
@@ -75,6 +84,7 @@ struct RegisterView: View {
                     }
                     .fontWeight(.bold)
                     .foregroundColor(AppTheme.primaryRed)
+                    .disabled(authViewModel.isLoading)
                 }
                 .padding(.top, 10)
             }
