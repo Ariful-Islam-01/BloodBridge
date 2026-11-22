@@ -2,61 +2,85 @@
 //  DonorProfileView.swift
 //  BloodBridge
 //
-//  Donor Profile screen using a simple SwiftUI Form.
+//  Donor Profile screen integrated with Firebase Firestore.
 //
 
 import SwiftUI
 
 struct DonorProfileView: View {
-    @State private var fullName: String = "Md Sabbir Hossain"
-    @State private var selectedBloodGroup: String = "O+"
-    @State private var phone: String = "+880 1700 000000"
-    @State private var city: String = "Dhaka"
-    @State private var area: String = "Dhanmondi"
-    @State private var isAvailable: Bool = true
-    @State private var showSavedAlert: Bool = false
-    
-    let bloodGroups = ["A+", "A-", "B+", "B-", "AB+", "AB-", "O+", "O-"]
+    @StateObject private var viewModel = DonorProfileViewModel()
     
     var body: some View {
         Form {
+            // Personal Information Section
             Section(header: Text("Personal Information")) {
-                TextField("Full Name", text: $fullName)
+                TextField("Full Name", text: $viewModel.fullName)
+                    .disabled(viewModel.isLoading)
                 
-                Picker("Blood Group", selection: $selectedBloodGroup) {
-                    ForEach(bloodGroups, id: \.self) { group in
-                        Text(group).tag(group)
+                Picker("Blood Group", selection: $viewModel.selectedBloodGroup) {
+                    ForEach(BloodGroup.allCases) { group in
+                        Text(group.rawValue).tag(group.rawValue)
                     }
                 }
+                .disabled(viewModel.isLoading)
                 
-                TextField("Phone Number", text: $phone)
-                TextField("City", text: $city)
-                TextField("Area", text: $area)
+                TextField("Phone Number", text: $viewModel.phone)
+                    .disabled(viewModel.isLoading)
+                
+                TextField("City (e.g. Dhaka)", text: $viewModel.city)
+                    .disabled(viewModel.isLoading)
+                
+                TextField("Area / Neighborhood", text: $viewModel.area)
+                    .disabled(viewModel.isLoading)
             }
             
+            // Availability Section
             Section(header: Text("Donor Availability")) {
-                Toggle("Available to Donate Blood", isOn: $isAvailable)
+                Toggle("Available to Donate Blood", isOn: $viewModel.isAvailable)
+                    .disabled(viewModel.isLoading)
             }
             
+            // Status Feedback Section
+            if !viewModel.errorMessage.isEmpty {
+                Section {
+                    Text(viewModel.errorMessage)
+                        .font(.footnote)
+                        .foregroundColor(.red)
+                }
+            }
+            
+            if !viewModel.successMessage.isEmpty {
+                Section {
+                    Text(viewModel.successMessage)
+                        .font(.footnote)
+                        .foregroundColor(.green)
+                }
+            }
+            
+            // Save Button Section
             Section {
                 Button(action: {
-                    showSavedAlert = true
+                    viewModel.saveProfile()
                 }) {
                     HStack {
                         Spacer()
-                        Text("Save Profile Changes")
-                            .fontWeight(.bold)
-                            .foregroundColor(AppTheme.primaryRed)
+                        if viewModel.isLoading {
+                            ProgressView()
+                                .progressViewStyle(CircularProgressViewStyle(tint: AppTheme.primaryRed))
+                        } else {
+                            Text("Save Profile Changes")
+                                .fontWeight(.bold)
+                                .foregroundColor(AppTheme.primaryRed)
+                        }
                         Spacer()
                     }
                 }
+                .disabled(viewModel.isLoading)
             }
         }
         .navigationTitle("My Donor Profile")
-        .alert("Profile Updated", isPresented: $showSavedAlert) {
-            Button("OK", role: .cancel) { }
-        } message: {
-            Text("Your profile information has been saved (UI only).")
+        .onAppear {
+            viewModel.fetchProfile()
         }
     }
 }
