@@ -2,20 +2,27 @@
 //  ContentView.swift
 //  BloodBridge
 //
-//  Created by Md Sabbir Hossain on 13/11/26.
+//  Root coordinator view that switches between Login and Home Dashboard.
 //
 
 import SwiftUI
 
 struct ContentView: View {
+    @StateObject private var authViewModel = AuthViewModel()
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            if authViewModel.isLoggedIn {
+                NavigationStack {
+                    HomeView()
+                }
+            } else {
+                NavigationStack {
+                    LoginView()
+                }
+            }
         }
-        .padding()
+        .environmentObject(authViewModel)
     }
 }
 
